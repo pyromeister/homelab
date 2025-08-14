@@ -4,7 +4,7 @@ An average consumption will be added here once available.
 
 ---
 
-# [**Mainserver** – *running 24/7*](<#1 Main Node/readme.md>)
+# **Mainserver** – *running 24/7*
 | Component       | Details                                                                     |
 |-----------------|-----------------------------------------------------------------------------|
 | **Model**       | Lenovo ThinkCentre M920q Tiny *(Ebay with 8GB RAM – 259,00 € – 13.08.2025)* |
@@ -84,3 +84,4 @@ An average consumption will be added here once available.
 
 
 ---
+
