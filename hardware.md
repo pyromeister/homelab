@@ -72,6 +72,10 @@ An average consumption will be added here once available.
 | Backup Node           | 69,00 €           |
 |                       |                   |
 | Together              | 1.288,31          |
+|||
+|||
+|USB-C to USB-A (for DAS) | 8,99 €          |
+|https://www.amazon.de/dp/B01GGKYS6E?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 | |
 
 ---
 
