@@ -40,3 +40,8 @@ Dateisystem anlegen, XFS hat via DAS irgendwie nicht funktioniert...
 EXT4 wird genutzt
 Freigabe SMB -> angelegt, DOS Attribute speichern aktiviert
 SMB selbst -> Minimal auf SMB1 stellen
+
+einbinden in Proxmox GUI oder via pvesm add cifs funktioniert nicht.
+smbcredentials file angelegt, rechte auf 600 gestellt und fstab modifiziert, mount -a funktioniert
+
+Reicht für mich, schade das es nicht funktioniert... wird auf später verschoben
