@@ -61,21 +61,21 @@ An average consumption will be added here once available.
 
 
 # **Price Summary**
-| Node                  | Price             |
-|-----------------------|-------------------|
-| Mainserver            | 259,00 €          |
-| RAM for Mainserver    | 74,52 €           |
-| NAS Node              | 69,00 €           |
-| Terramaster Case      | 118,99 €          |
-| 2x 14 TB HDDs         | 332,00 €          |
-| GPU Node              | 364,80 €          |
-| Backup Node           | 69,00 €           |
-|                       |                   |
-| Together              | 1.288,31          |
-|||
-|||
-|USB-C to USB-A (for DAS) | 8,99 €          |
-|https://www.amazon.de/dp/B01GGKYS6E?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 | |
+| Node                  | Type                                      | Price             |
+|-----------------------|-------------------------------------------|-------------------|
+| Mainserver            | Lenovo ThinkCentre M920q Tiny             | 259,00 €          |
+| RAM                   | Crucial DDR4 (2x16GB) - CT2K16G4SFRA32A   | 74,52 €           |
+| NAS Node              | Lenovo ThinkCentre M625q Tiny             | 69,00 €           |
+| DAS                   | TerraMaster D2-320                        | 118,99 €          |
+| 2x 16 TB HDDs         | seagate Exos X - X16 ST16000NM000J        | 332,00 €          |
+| GPU Node              |                                           | 364,80 €          |
+| Backup Node           | Lenovo ThinkCentre M625q Tiny             | 69,00 €           |
+|                       |                                           |                   |
+| Together              |                                           | 1.288,31          |
+||||
+||||
+|USB-C to USB-A (for DAS) || 8,99 €          |
+|https://www.amazon.de/dp/B01GGKYS6E?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 || |
 
 ---
 
