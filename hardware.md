@@ -74,8 +74,7 @@ An average consumption will be added here once available.
 | Together              |                                           | 1.288,31          |
 ||||
 ||||
-|USB-C to USB-A (for DAS) || 8,99 €          |
-|https://www.amazon.de/dp/B01GGKYS6E?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 || |
+| Amazon Basics USB-C-auf-USB-A 3.1 Gen 2-Adapter (for DAS) || 8,99 €          |
 
 ---
 
@@ -88,4 +87,5 @@ An average consumption will be added here once available.
 
 
 ---
+
 
