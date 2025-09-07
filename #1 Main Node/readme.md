@@ -16,3 +16,5 @@ via terminal von meinem desktop aus die iso`s des bestehenden Server downloaden:
 scp root@192.168.178.10:/var/lib/vz/template/iso/* ~/Downloads/
 danach auf neuem Main Node, via GUI einfach uploaden
 
+Backup des Alt Systems (PBS), danach Restore auf der Mainnode
+zuerst ein Test um zu schauen ob IP&MAC noch passen (damit keine Netzwerkanpassungen notwendig sind) -> erfolgreich
