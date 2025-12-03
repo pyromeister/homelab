@@ -1,73 +1,208 @@
-RAM eingebaut (32GB)
-PVE installiert, update und upgrade
-PBS Storage verbunden
-SMB von OMV verbunden 
+# Main Node Configuration Guide
 
-umbenennen der Node in
+## Table of Contents
+- [Initial Setup](#initial-setup)
+- [Storage Configuration](#storage-configuration)
+- [ISO Management](#iso-management)
+- [System Restore](#system-restore)
+- [Network Tools](#network-tools)
+- [Hardware Integration](#hardware-integration)
+  - [Conbee 3 USB Stick](#conbee-3-usb-stick)
+- [LXC Containers](#lxc-containers)
+- [Email Notifications](#email-notifications)
+- [Monitoring Stack](#monitoring-stack)
+- [Wake-on-LAN Setup](#wake-on-lan-setup)
+- [Automated Backup Node Management](#automated-backup-node-management)
+
+---
+
+## Initial Setup
+
+### Hardware Upgrade
+- **RAM**: Upgraded to 32 GB
+- **OS**: Proxmox VE (PVE) installed, updated and upgraded
+
+### Storage Connections
+- **PBS Storage**: Connected to Proxmox Backup Server
+- **SMB Share**: Connected from OpenMediaVault (OMV)
+
+### Node Renaming
+Configuration files to update when renaming the node:
+```bash
 /etc/hosts
 /etc/hostname
+```
 
-Habe noch eine alte 500GB SSD gefunden, eingebaut und als Directory eingebunden
-Direkt auf der Node via Disks, "Initialize Disk with GPT" und danach unter Disks->Directory "Create:Directory" mit xfs eingebunden.
+---
 
+## Storage Configuration
 
+### Additional SSD Installation
+Found and installed an additional 500 GB SSD as a directory.
 
-via terminal von meinem desktop aus die iso`s des bestehenden Server downloaden:
+**Configuration Steps:**
+1. Navigate to **Datacenter → Node → Disks**
+2. Select the new disk and click **Initialize Disk with GPT**
+3. Go to **Disks → Directory**
+4. Click **Create: Directory** and format with **XFS**
+
+---
+
+## ISO Management
+
+### Transfer ISOs from Old Server
+
+Download ISOs from the existing server via terminal:
+```bash
 scp root@192.168.178.10:/var/lib/vz/template/iso/* ~/Downloads/
-danach auf neuem Main Node, via GUI einfach uploaden
+```
 
-Backup des Alt Systems (PBS), danach Restore auf der Mainnode
-zuerst ein Test um zu schauen ob IP&MAC noch passen (damit keine Netzwerkanpassungen notwendig sind) -> erfolgreich
+Upload to new Main Node via the Proxmox GUI.
 
-Ich nutze gerne IP Tags, hierfür gibt es ein fertiges Script:
-https://community-scripts.github.io/ProxmoxVE/scripts?id=add-iptag&category=Proxmox+%26+Virtualization
+---
 
-# Conbee 3 für MQTT
-der Conbee Stick ist via USB angeschlossen, direkt im Datacenter als USB Gerät inkludiert und der mqtt Container nutzt diesen direkt (Thema Smarthome)
+## System Restore
 
+### Backup and Restore Process
+1. Created backup of old system using Proxmox Backup Server (PBS)
+2. Restored backup on Main Node
+3. **Test**: Verified IP & MAC addresses remained unchanged
+   - ✅ No network adjustments necessary
 
-# Favorisierte LXC Container:
-- cloudflared
-- mqtt
-- zigbee2mqtt
-- vaultwarden
-- homarr
-- nginxproxymanager
-- pihole
-- immich
+---
 
-# Mailing Proxmox
-- Datacenter -> Notifications
-- Add SMTP, deactivate mail-to-root, change default-matcher "targets-to-notify" to new configured smtp
+## Network Tools
 
-# Grafana, Prometheus, Prometheus-PVE-Exporter
-- install all via Helper Scripts as LXC
-- changed "/etc/prometheus/prometheus.yml" (see yml file here)
-- added new user (prometheus) as PVE user
--> under permission gave the prometheus for / the PVEAuditor rights
--> changed in pve-exporter the "/opt/prometheus-pve-exporter/pve.yml"
+### IP Tags Script
+For easier IP management, install the IP Tags script:
 
-# Wake-On-Lan Konfigurieren
-zuerst mal installieren:
->apt update
+**Source**: [Community Scripts - Add IP Tag](https://community-scripts.github.io/ProxmoxVE/scripts?id=add-iptag&category=Proxmox+%26+Virtualization)
+
+---
+
+## Hardware Integration
+
+### Conbee 3 USB Stick
+
+**Purpose**: MQTT integration for smart home automation
+
+**Configuration:**
+- Conbee 3 stick connected via USB
+- Registered in **Datacenter** as USB device
+- Passed through to MQTT container for direct access
+
+---
+
+## LXC Containers
+
+### Preferred Container Stack
+
+| Container              | Purpose                          |
+|------------------------|----------------------------------|
+| cloudflared            | Cloudflare tunnel                |
+| mqtt                   | Message broker                   |
+| zigbee2mqtt            | Zigbee smart home bridge         |
+| vaultwarden            | Password manager                 |
+| homarr                 | Dashboard                        |
+| nginxproxymanager      | Reverse proxy                    |
+| pihole                 | Network-wide ad blocking         |
+| immich                 | Photo management                 |
+
+---
+
+## Email Notifications
+
+### Proxmox Mail Configuration
+
+**Setup Steps:**
+1. Navigate to **Datacenter → Notifications**
+2. Click **Add SMTP** and configure your SMTP server
+3. **Deactivate** the default `mail-to-root` notification
+4. In **default-matcher**, change **targets-to-notify** to your new SMTP configuration
+
+---
+
+## Monitoring Stack
+
+### Grafana + Prometheus + PVE Exporter
+
+**Installation:**
+- Install all three components via Helper Scripts as LXC containers
+
+**Prometheus Configuration:**
+1. Edit `/etc/prometheus/prometheus.yml` (see [prometheus.yml](prometheus.yml) in this directory)
+
+**PVE Exporter Setup:**
+1. Create a new user named `prometheus` in Proxmox
+2. Navigate to **Permissions**
+3. Assign **PVEAuditor** role to the `prometheus` user for path `/`
+4. Edit `/opt/prometheus-pve-exporter/pve.yml` with the new user credentials
+
+---
+
+## Wake-on-LAN Setup
+
+### Installation
+
+Install the Wake-on-LAN package:
+```bash
+apt update
 apt install wakeonlan -y
+```
 
-# ssh key für PBS vorbereiten, damit shutdown auch funktioniert
-PVE Terminal:
->ssh-keygen -t ed25519
+### SSH Key Setup for PBS
 
-Kopieren auf den PBS Server:
->ssh-copy-id root@192.168.178.5
+**Purpose**: Enable automated shutdown of Backup Node
 
-Test:
->ssh root@192.168.178.5 "echo ok"
+**Generate SSH key on PVE:**
+```bash
+ssh-keygen -t ed25519
+```
 
-Wenn ok kommt, funktioniert es.
+**Copy key to PBS server:**
+```bash
+ssh-copy-id root@192.168.178.5
+```
 
-# CronJob für Wake-On-Lan und Shutdown der Backup Node
->crontab -e
+**Test the connection:**
+```bash
+ssh root@192.168.178.5 "echo ok"
+```
 
-Beim ersten Mal fragt er dich evtl. nach einem Editor – nimm nano, wenn du unsicher bist.
-Am Ende der Datei dann die Cronjobs hinzufügen, für mich ist es Sonntags 00:30Uhr wake on lan und Sonntags 06:00Uhr shutdown:
->30 0 * * 0 /usr/bin/wakeonlan 6c:4b:90:c7:7b:c5
+If it returns `ok`, the connection is working correctly.
+
+---
+
+## Automated Backup Node Management
+
+### Cron Jobs for Wake-on-LAN and Shutdown
+
+**Edit crontab:**
+```bash
+crontab -e
+```
+
+When prompted for an editor, choose `nano` if unsure.
+
+**Add the following cron jobs:**
+
+```cron
+# Wake up Backup Node every Sunday at 00:30
+30 0 * * 0 /usr/bin/wakeonlan 6c:4b:90:c7:7b:c5
+
+# Shutdown Backup Node every Sunday at 06:00
 0 6 * * 0 ssh root@192.168.178.5 "shutdown -h now"
+```
+
+**Schedule:**
+- **Sunday 00:30**: Wake up Backup Node
+- **Sunday 06:00**: Shutdown Backup Node
+
+---
+
+## Notes
+
+- All commands assume root access
+- Backup your configuration before making changes
+- Test SSH connections before setting up automated shutdown
+- Adjust cron schedule based on your backup requirements
