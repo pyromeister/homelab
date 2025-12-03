@@ -54,7 +54,7 @@ Found and installed an additional 500 GB SSD as a directory.
 
 Download ISOs from the existing server via terminal:
 ```bash
-scp root@192.168.178.10:/var/lib/vz/template/iso/* ~/Downloads/
+scp root@OLD_SERVER_IP:/var/lib/vz/template/iso/* ~/Downloads/
 ```
 
 Upload to new Main Node via the Proxmox GUI.
@@ -161,12 +161,12 @@ ssh-keygen -t ed25519
 
 **Copy key to PBS server:**
 ```bash
-ssh-copy-id root@192.168.178.5
+ssh-copy-id root@BACKUP_NODE_IP
 ```
 
 **Test the connection:**
 ```bash
-ssh root@192.168.178.5 "echo ok"
+ssh root@BACKUP_NODE_IP "echo ok"
 ```
 
 If it returns `ok`, the connection is working correctly.
@@ -188,10 +188,10 @@ When prompted for an editor, choose `nano` if unsure.
 
 ```cron
 # Wake up Backup Node every Sunday at 00:30
-30 0 * * 0 /usr/bin/wakeonlan 6c:4b:90:c7:7b:c5
+30 0 * * 0 /usr/bin/wakeonlan BACKUP_NODE_MAC_ADDRESS
 
 # Shutdown Backup Node every Sunday at 06:00
-0 6 * * 0 ssh root@192.168.178.5 "shutdown -h now"
+0 6 * * 0 ssh root@BACKUP_NODE_IP "shutdown -h now"
 ```
 
 **Schedule:**

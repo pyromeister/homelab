@@ -68,9 +68,9 @@ nano /etc/network/interfaces
 ```bash
 auto enp2s0
 iface enp2s0 inet static
-    address 192.168.178.5
+    address BACKUP_NODE_IP
     netmask 255.255.255.0
-    gateway 192.168.178.1
+    gateway GATEWAY_IP
     post-up /sbin/ethtool -s enp2s0 wol g
 ```
 

@@ -50,14 +50,14 @@
 
 **Testing SMB Connectivity:**
 ```bash
-pvesm cifsscan 192.168.178.21 --username "proxmox" --password
+pvesm cifsscan NAS_NODE_IP --username "USERNAME" --password
 # Enter Password: **********
 # Output: smb
 ```
 
 **Adding SMB Storage:**
 ```bash
-pvesm add cifs SMB1 --server 192.168.178.21 --share "smb" --username "proxmox" --password
+pvesm add cifs SMB1 --server NAS_NODE_IP --share "smb" --username "USERNAME" --password
 ```
 
 **Parameters:**
@@ -132,7 +132,7 @@ pvesm add cifs SMB1 --server 192.168.178.21 --share "smb" --username "proxmox" -
 nano /etc/smbcredentials
 
 # Add the following:
-username=proxmox
+username=YOUR_USERNAME
 password=YOUR_PASSWORD
 ```
 
@@ -146,7 +146,7 @@ chmod 600 /etc/smbcredentials
 nano /etc/fstab
 
 # Add the following line:
-//192.168.178.21/smb /mnt/smb cifs credentials=/etc/smbcredentials,iocharset=utf8,file_mode=0777,dir_mode=0777 0 0
+//NAS_NODE_IP/smb /mnt/smb cifs credentials=/etc/smbcredentials,iocharset=utf8,file_mode=0777,dir_mode=0777 0 0
 ```
 
 **4. Mount the share:**
